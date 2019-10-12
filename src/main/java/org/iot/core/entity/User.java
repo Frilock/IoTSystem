@@ -1,4 +1,4 @@
-package core.entity;
+package org.iot.core.entity;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Data
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;

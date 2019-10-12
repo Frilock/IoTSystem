@@ -1,6 +1,6 @@
-package core.repository;
+package org.iot.core.repository;
 
-import core.entity.User;
+import org.iot.core.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

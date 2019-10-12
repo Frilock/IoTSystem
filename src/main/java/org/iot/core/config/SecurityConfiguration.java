@@ -1,9 +1,9 @@
-package core.config;
+package org.iot.core.config;
 
-import core.security.TokenAuthenticationFilter;
-import core.security.TokenAuthorizationFilter;
-import core.security.TokenUtil;
-import core.service.UserService;
+import org.iot.core.security.TokenAuthenticationFilter;
+import org.iot.core.security.TokenAuthorizationFilter;
+import org.iot.core.security.TokenUtil;
+import org.iot.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -67,12 +67,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                         .permitAll()
-                    .antMatchers("/login", "/register")
+                    .antMatchers("/api/public", "/api/auth/login", "/api/auth/register")
                         .permitAll()
                     .anyRequest()
                         .authenticated();
         http
-                .addFilterBefore(new TokenAuthenticationFilter(authenticationManager(), tokenUtil), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new TokenAuthenticationFilter("/api/auth/login", authenticationManager(), tokenUtil), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new TokenAuthorizationFilter(tokenUtil), UsernamePasswordAuthenticationFilter.class);
     }
 

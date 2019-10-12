@@ -1,4 +1,4 @@
-package core.security;
+package org.iot.core.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,8 +17,8 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
 
     private TokenUtil tokenUtil;
 
-    public TokenAuthenticationFilter(AuthenticationManager authenticationManager, TokenUtil tokenUtil) {
-        setFilterProcessesUrl("/login");
+    public TokenAuthenticationFilter(String url, AuthenticationManager authenticationManager, TokenUtil tokenUtil) {
+        setFilterProcessesUrl(url);
         setAuthenticationManager(authenticationManager);
         this.tokenUtil = tokenUtil;
     }

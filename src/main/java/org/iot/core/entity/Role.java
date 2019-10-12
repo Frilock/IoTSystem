@@ -1,4 +1,4 @@
-package core.entity;
+package org.iot.core.entity;
 
 public enum Role {
     USER, ADMIN

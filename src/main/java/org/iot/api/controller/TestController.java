@@ -1,4 +1,4 @@
-package api.controllers;
+package org.iot.api.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +13,7 @@ public class TestController {
         return "Private data";
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/api/public")
     public String getIndex() {
         Authentication auth = SecurityContextHolder.getContext()
                 .getAuthentication();

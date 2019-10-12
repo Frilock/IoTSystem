@@ -1,4 +1,4 @@
-package core.security;
+package org.iot.core.security;
 
 import io.jsonwebtoken.*;
 import lombok.Getter;
@@ -17,17 +17,18 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class TokenUtil {
+
     @Getter
     private static final String TOKEN_HEADER = "Authorization";
     @Getter
-    private static final String TOKEN_PREFIX = "Bearer";
+    private static final String TOKEN_PREFIX = "Bearer ";
     @Getter
     private static final long TOKEN_VALIDITY_TIME = Duration.ofHours(2).toMillis();
 
     @Value("${jwt.secret}")
     private String secretKey;
 
-    String createToken(String username) {
+    public String createToken(String username) {
         return Jwts.builder()
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY_TIME))
                 .setSubject(username)
@@ -36,7 +37,7 @@ public class TokenUtil {
                 .compact();
     }
 
-    Optional<Authentication> validateToken(HttpServletRequest request) {
+    public Optional<Authentication> validateToken(HttpServletRequest request) {
         String token = request.getHeader(TOKEN_HEADER);
 
         if (StringUtils.hasText(token) && token.startsWith(TOKEN_PREFIX)) {
