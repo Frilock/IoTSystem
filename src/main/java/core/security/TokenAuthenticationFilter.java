@@ -36,7 +36,7 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String username = authentication.getName();
         String token = tokenUtil.createToken(username);
-        response.addHeader(TokenUtil.TOKEN_HEADER, TokenUtil.TOKEN_PREFIX + token);
+        response.addHeader(TokenUtil.getTOKEN_HEADER(), TokenUtil.getTOKEN_PREFIX() + token);
         log.info("Auth: " + SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }

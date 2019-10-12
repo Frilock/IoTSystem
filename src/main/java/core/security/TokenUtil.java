@@ -1,6 +1,7 @@
 package core.security;
 
 import io.jsonwebtoken.*;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,30 +17,32 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class TokenUtil {
-
-    public static final String TOKEN_HEADER = "Authorization";
-    public static final String TOKEN_PREFIX = "Bearer ";
+    @Getter
+    private static final String TOKEN_HEADER = "Authorization";
+    @Getter
+    private static final String TOKEN_PREFIX = "Bearer";
+    @Getter
     private static final long TOKEN_VALIDITY_TIME = Duration.ofHours(2).toMillis();
 
     @Value("${jwt.secret}")
-    private String secret;
+    private String secretKey;
 
-    public String createToken(String username) {
+    String createToken(String username) {
         return Jwts.builder()
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY_TIME))
                 .setSubject(username)
                 .claim("role", "user")
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
 
-    public Optional<Authentication> validateToken(HttpServletRequest request) {
+    Optional<Authentication> validateToken(HttpServletRequest request) {
         String token = request.getHeader(TOKEN_HEADER);
 
         if (StringUtils.hasText(token) && token.startsWith(TOKEN_PREFIX)) {
             try {
                 Claims claims = Jwts.parser()
-                        .setSigningKey(secret)
+                        .setSigningKey(secretKey)
                         .parseClaimsJws(token.replace(TOKEN_PREFIX, "").trim())
                         .getBody();
 
