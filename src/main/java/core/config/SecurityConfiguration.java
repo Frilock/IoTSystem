@@ -1,10 +1,9 @@
 package core.config;
 
 import core.security.TokenAuthenticationFilter;
-import core.security.TokenAuthenticationManager;
 import core.security.TokenAuthorizationFilter;
 import core.security.TokenUtil;
-import core.service.UserDetailsServiceImpl;
+import core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,11 +30,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private TokenUtil tokenUtil;
 
     @Autowired
-    private TokenAuthenticationManager tokenAuthenticationManager;
+    private UserService userService;
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(new UserDetailsServiceImpl());
+        auth
+                .userDetailsService(userService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -71,7 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .anyRequest()
                         .authenticated();
         http
-                .addFilterBefore(new TokenAuthenticationFilter(tokenAuthenticationManager, tokenUtil), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new TokenAuthenticationFilter(authenticationManager(), tokenUtil), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new TokenAuthorizationFilter(tokenUtil), UsernamePasswordAuthenticationFilter.class);
     }
 
