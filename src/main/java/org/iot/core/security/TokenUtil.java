@@ -28,10 +28,10 @@ public class TokenUtil {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    public String createToken(String username) {
+    public String createToken(String email) {
         return Jwts.builder()
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY_TIME))
-                .setSubject(username)
+                .setSubject(email)
                 .claim("role", "user")
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
