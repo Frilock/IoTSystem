@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.iot.core.entity.User;
 import org.iot.core.security.TokenUtil;
 import org.iot.core.service.UserService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,23 +42,20 @@ public class AuthController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        return getJsonToken(user);
+    }
 
+    private ResponseEntity<?> getJsonToken(@RequestBody User user) {
         String token = tokenUtil.createToken(user.getEmail());
-        log.info(user.toString());
-        return ResponseEntity
-                .ok()
-                .header(TokenUtil.getTOKEN_HEADER(), TokenUtil.getTOKEN_PREFIX() + token)
-                .body("Success");
+        JSONObject jsonToken = new JSONObject();
+        jsonToken.put("token", token);
+        return ResponseEntity.ok(jsonToken.toString());
     }
 
     @PostMapping("/api/auth/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         if(userService.addUser(user)) {
-            String token = tokenUtil.createToken(user.getEmail());
-            return ResponseEntity
-                    .ok()
-                    .header(TokenUtil.getTOKEN_HEADER(), TokenUtil.getTOKEN_PREFIX() + token)
-                    .body("Success");
+            return getJsonToken(user);
         } else {
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
