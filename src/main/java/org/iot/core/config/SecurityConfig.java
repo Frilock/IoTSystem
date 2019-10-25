@@ -25,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         securedEnabled = true,
         jsr250Enabled = true
 )
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private TokenUtil tokenUtil;
@@ -65,6 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .and()
                 .authorizeRequests()
                     .antMatchers("/",
+                        "/socket.io/**",
                         "/favicon.ico",
                         "/**/*.png",
                         "/**/*.gif",
@@ -74,7 +75,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                         .permitAll()
-                    .antMatchers("/api/public", "/api/auth/login", "/api/auth/register")
+                    .antMatchers("/api/public", "/api/users/signin", "/api/users/signup")
                         .permitAll()
                     .anyRequest()
                         .authenticated();

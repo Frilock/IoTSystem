@@ -21,7 +21,7 @@ public class TokenUtil {
     @Getter
     private static final String TOKEN_HEADER = "Authorization";
     @Getter
-    private static final String TOKEN_PREFIX = "Bearer ";
+    private static final String TOKEN_PREFIX = "Token ";
     @Getter
     private static final long TOKEN_VALIDITY_TIME = Duration.ofHours(2).toMillis();
 
