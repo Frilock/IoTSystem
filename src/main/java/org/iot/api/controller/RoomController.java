@@ -14,7 +14,7 @@ public class RoomController {
 
     private final SocketIOServer server;
 
-    @Scheduled(fixedRate=3000)
+    @Scheduled(fixedRate=20000)
     private void sendMessage() {
         log.info("Sending message");
         Message message = new Message();
