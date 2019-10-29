@@ -14,20 +14,22 @@ public class RoomController {
 
     private final SocketIOServer server;
 
-    @Scheduled(fixedRate=20000)
-    private void sendMessage() {
-        log.info("Sending message");
-        Message message = new Message();
-        message.setRoom("room");
-        server.getBroadcastOperations().sendEvent("receive message", message);
-    }
-
     @Autowired
     public RoomController(SocketIOServer server) {
         this.server = server;
         this.server.addEventListener("new message", Message.class, onNewMessage());
         this.server.addEventListener("room", Message.class, onUserJoinRoom());
         this.server.addEventListener("leave room", Message.class, onUserLeftRoom());
+    }
+
+    @Scheduled(fixedRate = 20000)
+    private void sendMessage() {
+        log.info("Sending message");
+
+        Message message = new Message();
+        message.setRoom("room");
+
+        server.getBroadcastOperations().sendEvent("receive message", message);
     }
 
     private DataListener<Message> onUserJoinRoom() {
@@ -46,7 +48,7 @@ public class RoomController {
 
     private DataListener<Message> onUserLeftRoom() {
         return (client, data, ackSender) -> {
-            log.info("Client[{}] left the room", client.getSessionId().toString(), data);
+            log.info("Client[{}] left the room", client.getSessionId().toString());
             //server.getBroadcastOperations().sendEvent("receive message", data);
         };
     }
