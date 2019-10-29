@@ -31,6 +31,9 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByEmail(username);
 
         //TODO: store roles in db
+
+
+
         Set<GrantedAuthority> roles = new HashSet<>();
         // TODO : thinking about it ....
         roles.add(new SimpleGrantedAuthority(new Access().getLevel().);
