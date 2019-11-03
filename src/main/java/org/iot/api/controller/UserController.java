@@ -2,7 +2,7 @@ package org.iot.api.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.iot.core.dto.AuthResponseDto;
-import org.iot.core.entity.User;
+import org.iot.core.entity.user.User;
 import org.iot.core.security.TokenUtil;
 import org.iot.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

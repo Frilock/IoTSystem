@@ -1,4 +1,4 @@
-package org.iot.core.entity;
+package org.iot.core.entity.user;
 
 import lombok.Data;
 

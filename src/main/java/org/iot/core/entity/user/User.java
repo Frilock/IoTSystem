@@ -1,4 +1,4 @@
-package org.iot.core.entity;
+package org.iot.core.entity.user;
 
 import lombok.Data;
 
@@ -14,4 +14,5 @@ public class User {
     private String email;
     private String password;
     private String displayName;
+    private byte[] imageModel;
 }

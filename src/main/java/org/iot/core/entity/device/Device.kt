@@ -1,4 +1,4 @@
-package org.iot.core.entity
+package org.iot.core.entity.device
 
 data class Device(val id: Int,
                   val name: String,
