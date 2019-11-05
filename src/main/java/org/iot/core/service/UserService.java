@@ -1,6 +1,6 @@
 package org.iot.core.service;
 
-import org.iot.core.entity.user.Access;
+import org.iot.core.entity.user.Role;
 import org.iot.core.entity.user.User;
 import org.iot.core.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +17,12 @@ import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder){
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -32,8 +30,8 @@ public class UserService implements UserDetailsService {
 
         //TODO: store roles in db
         Set<GrantedAuthority> roles = new HashSet<>();
-        // TODO : thinking about it ....
-        roles.add(new SimpleGrantedAuthority(new Access().getLevel().);
+        // TODO : think about ...
+        roles.add(new SimpleGrantedAuthority(Role.USER.name()));
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(),

@@ -7,7 +7,7 @@ import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 
 @Configuration
-@EnableCassandraRepositories
+@EnableCassandraRepositories(basePackages = "org.iot.core.repository")
 public class CassandraConfig extends AbstractCassandraConfiguration {
     @Value("${cassandra.keyspace}")
     private String keySpace;
@@ -17,9 +17,6 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
 
     @Value("${cassandra.port}")
     private int port;
-
-    @Value("${cassandra.basePackages}")
-    private String basePackages;
 
     @Override
     protected String getKeyspaceName() {
@@ -39,10 +36,5 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
     @Override
     public SchemaAction getSchemaAction() {
         return SchemaAction.CREATE_IF_NOT_EXISTS;
-    }
-
-    @Override
-    public String[] getEntityBasePackages() {
-        return new String[]{basePackages};
     }
 }
