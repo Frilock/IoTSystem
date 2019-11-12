@@ -1,11 +1,6 @@
 package org.iot.core.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
-import org.springframework.data.cassandra.config.SchemaAction;
-import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
-
+/*
 @Configuration
 @EnableCassandraRepositories(basePackages = "org.iot.core.repository")
 public class CassandraConfig extends AbstractCassandraConfiguration {
@@ -38,3 +33,4 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
         return SchemaAction.CREATE_IF_NOT_EXISTS;
     }
 }
+ */

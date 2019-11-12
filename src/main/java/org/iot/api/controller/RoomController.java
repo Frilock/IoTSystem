@@ -22,6 +22,7 @@ public class RoomController {
         this.server.addEventListener("leave room", Message.class, onUserLeftRoom());
     }
 
+    /*
     @Scheduled(fixedRate = 20000)
     private void sendMessage() {
         log.info("Sending message");
@@ -31,6 +32,7 @@ public class RoomController {
 
         server.getBroadcastOperations().sendEvent("receive message", message);
     }
+     */
 
     private DataListener<Message> onUserJoinRoom() {
         return (client, data, ackSender) -> {
