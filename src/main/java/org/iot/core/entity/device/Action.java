@@ -36,12 +36,15 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "action")
+@Table(name = "actions", schema = "device")
 public class Action {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String name;
-    private String MqttTopic;
+    @Column(name = "mqtt_topic")
+    private String mqttTopic;
+    @Column(name = "id_action_type")
     private Long actionTypeId;
 }

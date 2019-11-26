@@ -1,28 +1,31 @@
 package org.iot.api.controller;
 
-import org.iot.core.entity.device.Action;
-import org.iot.core.repository.DeviceRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.iot.core.dto.DeviceRequestDto;
+import org.iot.core.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/device")
 public class DeviceController {
-    private DeviceRepository deviceRepository;
+    private DeviceService deviceService;
 
     @Autowired
-    public DeviceController(DeviceRepository deviceRepository) {
-        this.deviceRepository = deviceRepository;
+    public DeviceController(DeviceService deviceService) {
+        this.deviceService = deviceService;
     }
 
     @GetMapping("/getAll")
-    public void getAllDevice() {
-        List<Action> actions = (List<Action>) deviceRepository.findAll();
-
+    public List<DeviceRequestDto> getAllDevice() {
+        return deviceService.getAllDevice();
     }
 
+    @PostMapping("/{actionId}/{actionTypeDataId}")
+    public void handleAction(@PathVariable long actionId, @PathVariable long actionTypeDataId) {
+        deviceService.handleAction(actionId, actionTypeDataId);
+    }
 }

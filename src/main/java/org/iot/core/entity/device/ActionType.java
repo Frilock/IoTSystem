@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Table(name = "action_type")
+@Table(name = "action_types", schema = "device")
 @Entity
 @Data
 public class ActionType {
