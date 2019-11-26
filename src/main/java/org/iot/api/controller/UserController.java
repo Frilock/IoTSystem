@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class UserController {
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private TokenUtil tokenUtil;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    public UserController(UserService userService, TokenUtil tokenUtil, AuthenticationManager manager){
+        this.authenticationManager = manager;
+        this.tokenUtil = tokenUtil;
+        this.userService = userService;
+    }
 
     @PostMapping("/users/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody User user) {
-
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getEmail(),
