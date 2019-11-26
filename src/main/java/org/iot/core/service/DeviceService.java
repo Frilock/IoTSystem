@@ -1,8 +1,9 @@
 package org.iot.core.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.client.mqttv3.*;
-import org.eclipse.paho.client.mqttv3.internal.wire.MqttPublish;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.iot.core.dto.DeviceRequestDto;
 import org.iot.core.entity.device.Action;
 import org.iot.core.entity.device.ActionTypeData;
@@ -25,9 +26,6 @@ public class DeviceService {
     @Value("${broker}")
     private String broker;
 
-    // уникальная строчка
-    private String clientId = "clientId";
-
     @Autowired
     public DeviceService(ActionRepository actionRepository, ActionTypeDataRepository typeDataRepository) {
         this.actionRepository = actionRepository;
@@ -44,21 +42,17 @@ public class DeviceService {
 
     public void handleAction(Long actionId, Long actionTypeDataId) {
         Action action = actionRepository.findById(actionId).orElse(null);
-
-        if (action == null){
+        if (action == null) {
             throw new IllegalArgumentException("Not found action with id = " + actionId);
         }
 
-        String topic = action.getMqttTopic();
-
         ActionTypeData actionTypeData = typeDataRepository.findById(actionTypeDataId).orElse(null);
-
-        if (actionTypeData == null){
+        if (actionTypeData == null) {
             throw new IllegalArgumentException("Not found actionTypeData with id = " + actionTypeDataId);
         }
 
+        String topic = action.getMqttTopic();
         String message = actionTypeData.getValue();
-
         try {
             MqttConnectOptions opt = new MqttConnectOptions();
             opt.setCleanSession(true);
@@ -68,8 +62,7 @@ public class DeviceService {
             MqttClient publisher = new MqttClient(broker, UUID.randomUUID().toString());
             publisher.connect(opt);
             publisher.publish(topic, message.getBytes(), 0, false);
-        } catch (MqttException e){
-            e.printStackTrace();
+        } catch (MqttException e) {
             log.error("MQTT exception: " + e.getMessage());
         }
     }

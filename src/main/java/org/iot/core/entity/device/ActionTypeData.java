@@ -11,8 +11,8 @@ public class ActionTypeData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "action_type_id")
     private Long actionTypeId;
     private String name;
-    // format value????
     private String value;
 }
