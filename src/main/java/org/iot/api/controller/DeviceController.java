@@ -10,7 +10,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/action")
+@RequestMapping("/actions")
 public class DeviceController {
     private DeviceService deviceService;
 
@@ -19,7 +19,7 @@ public class DeviceController {
         this.deviceService = deviceService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<DeviceResponseDto> getAllDevice() {
         return deviceService.getAllDevice();
     }

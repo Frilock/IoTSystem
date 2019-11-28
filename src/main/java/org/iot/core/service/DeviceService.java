@@ -34,6 +34,8 @@ public class DeviceService {
     public List<DeviceResponseDto> getAllDevice() {
         List<DeviceResponseDto> responseDto = new ArrayList<>();
 
+        List<Action> actions = actionRepository.findAll();
+
         responseDto.add(
                 new DeviceResponseDto(7L, "Light", new ArrayList<>(Arrays.asList(
                         new ActionDto(1L, "Turn off", "Button"),
