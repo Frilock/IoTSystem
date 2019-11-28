@@ -21,7 +21,7 @@ public class UserPositionController {
         this.server.addEventListener("leave room", UserPositionDto.class, onUserLeftRoom());
     }
 
-    @Scheduled(fixedRate = 20000)
+    //@Scheduled(fixedRate = 20000)
     private void sendMessage() {
         log.info("Sending message");
         UserPositionDto message = new UserPositionDto();

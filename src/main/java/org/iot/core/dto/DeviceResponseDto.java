@@ -1,11 +1,13 @@
 package org.iot.core.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.util.List;
 
-/**
- * Dto для пересылки данных о девайсах
- */
-public class DeviceRequestDto {
+@Data
+@AllArgsConstructor
+public class DeviceResponseDto {
     private Long id;
     private String name;
     private List<ActionDto> actions;

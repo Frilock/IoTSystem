@@ -4,7 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.iot.core.dto.DeviceRequestDto;
+import org.iot.core.dto.ActionDto;
+import org.iot.core.dto.DeviceResponseDto;
 import org.iot.core.entity.device.Action;
 import org.iot.core.entity.device.ActionTypeData;
 import org.iot.core.repository.ActionRepository;
@@ -13,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -32,12 +31,25 @@ public class DeviceService {
         this.typeDataRepository = typeDataRepository;
     }
 
-    public List<DeviceRequestDto> getAllDevice() {
-        List<DeviceRequestDto> requestDto = new ArrayList<>();
-        // переделать метод
+    public List<DeviceResponseDto> getAllDevice() {
+        List<DeviceResponseDto> responseDto = new ArrayList<>();
 
-        actionRepository.findAll();
-        return null;
+        responseDto.add(
+                new DeviceResponseDto(7L, "Light", new ArrayList<>(Arrays.asList(
+                        new ActionDto(1L, "Turn off", "Button"),
+                        new ActionDto(2L, "Turn on", "Button"),
+                        new ActionDto(3L, "Brightness", "Slider")
+                )))
+        );
+
+        responseDto.add(
+                new DeviceResponseDto(5L, "Door", new ArrayList<>(Arrays.asList(
+                        new ActionDto(1L, "Close", "Button"),
+                        new ActionDto(2L, "Open", "Button")
+                )))
+        );
+
+        return responseDto;
     }
 
     public void handleAction(Long actionId, Long actionTypeDataId) {
