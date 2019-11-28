@@ -53,15 +53,13 @@ public class DeviceService {
     }
 
     public void handleAction(Long actionId, Long actionTypeDataId) {
-        Action action = actionRepository.findById(actionId).orElse(null);
-        if (action == null) {
-            throw new IllegalArgumentException("Not found action with id = " + actionId);
-        }
+        Action action = actionRepository.findById(actionId).orElseThrow(
+                () -> new IllegalArgumentException("Not found action with id = " + actionId)
+        );
 
-        ActionTypeData actionTypeData = typeDataRepository.findById(actionTypeDataId).orElse(null);
-        if (actionTypeData == null) {
-            throw new IllegalArgumentException("Not found actionTypeData with id = " + actionTypeDataId);
-        }
+        ActionTypeData actionTypeData = typeDataRepository.findById(actionTypeDataId).orElseThrow(
+                () -> new IllegalArgumentException("Not found actionTypeData with id = " + actionTypeDataId)
+        );
 
         String topic = action.getMqttTopic();
         String message = actionTypeData.getValue();
