@@ -11,8 +11,10 @@ public class ActionTypeData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "action_type_id")
-    private Long actionTypeId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_action_type", nullable = false)
+    private ActionType actionType;
     private String name;
     private String value;
 }

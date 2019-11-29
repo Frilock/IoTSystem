@@ -1,8 +1,8 @@
 package org.iot.api.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iot.core.dto.DeviceResponseDto;
-import org.iot.core.service.DeviceService;
+import org.iot.core.dto.ActionResponseDto;
+import org.iot.core.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,17 +11,17 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/actions")
-public class DeviceController {
-    private DeviceService deviceService;
+public class ActionController {
+    private ActionService actionService;
 
     @Autowired
-    public DeviceController(DeviceService deviceService) {
-        this.deviceService = deviceService;
+    public ActionController(ActionService actionService) {
+        this.actionService = actionService;
     }
 
     @GetMapping
-    public List<DeviceResponseDto> getAllDevice() {
-        return deviceService.getAllDevice();
+    public List<ActionResponseDto> getAllDevice() {
+        return actionService.getAllActions();
     }
 
     @PostMapping("/{actionId}/{actionTypeDataId}")

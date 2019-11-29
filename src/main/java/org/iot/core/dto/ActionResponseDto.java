@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class DeviceResponseDto {
+public class ActionResponseDto {
     private Long id;
     private String name;
     private List<ActionDto> actions;

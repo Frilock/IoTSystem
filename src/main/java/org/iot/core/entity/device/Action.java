@@ -41,10 +41,10 @@ public class Action {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "mqtt_topic")
     private String mqttTopic;
-    @Column(name = "id_action_type")
-    private Long actionTypeId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_action_type", nullable = false)
+    private ActionType actionType;
 }

@@ -5,51 +5,58 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.iot.core.dto.ActionDto;
-import org.iot.core.dto.DeviceResponseDto;
+import org.iot.core.dto.ActionResponseDto;
 import org.iot.core.entity.device.Action;
+import org.iot.core.entity.device.ActionType;
 import org.iot.core.entity.device.ActionTypeData;
 import org.iot.core.repository.ActionRepository;
 import org.iot.core.repository.ActionTypeDataRepository;
+import org.iot.core.repository.ActionTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class DeviceService {
+public class ActionService {
     private ActionRepository actionRepository;
+    private ActionTypeRepository actionTypeRepository;
     private ActionTypeDataRepository typeDataRepository;
 
     @Value("${broker}")
     private String broker;
 
     @Autowired
-    public DeviceService(ActionRepository actionRepository, ActionTypeDataRepository typeDataRepository) {
+    public ActionService(
+            ActionRepository actionRepository,
+            ActionTypeDataRepository typeDataRepository,
+            ActionTypeRepository actionTypeRepository
+    ) {
         this.actionRepository = actionRepository;
         this.typeDataRepository = typeDataRepository;
+        this.actionTypeRepository = actionTypeRepository;
     }
 
-    public List<DeviceResponseDto> getAllDevice() {
-        List<DeviceResponseDto> responseDto = new ArrayList<>();
+    public List<ActionResponseDto> getAllActions() {
+        List<ActionResponseDto> responseDto = new ArrayList<>();
 
         List<Action> actions = actionRepository.findAll();
-
-        responseDto.add(
-                new DeviceResponseDto(7L, "Light", new ArrayList<>(Arrays.asList(
-                        new ActionDto(1L, "Turn off", "Button"),
-                        new ActionDto(2L, "Turn on", "Button"),
-                        new ActionDto(3L, "Brightness", "Slider")
-                )))
-        );
-
-        responseDto.add(
-                new DeviceResponseDto(5L, "Door", new ArrayList<>(Arrays.asList(
-                        new ActionDto(1L, "Close", "Button"),
-                        new ActionDto(2L, "Open", "Button")
-                )))
-        );
+        actions.forEach(action -> {
+            ActionType actionType = action.getActionType();
+            List<ActionDto> actionDtos = actionType.getActionTypeData()
+                    .stream()
+                    .map(actionTypeData ->
+                            new ActionDto(
+                                    actionTypeData.getId(),
+                                    actionTypeData.getName(),
+                                    "Button"
+                            ))
+                    .collect(Collectors.toList());
+            responseDto.add(new ActionResponseDto(action.getId(), action.getName(), actionDtos));
+        });
 
         return responseDto;
     }
