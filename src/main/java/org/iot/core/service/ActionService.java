@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.iot.core.dto.ActionDto;
 import org.iot.core.dto.ActionResponseDto;
 import org.iot.core.entity.device.Action;
@@ -23,21 +24,15 @@ import java.util.stream.Collectors;
 @Service
 public class ActionService {
     private ActionRepository actionRepository;
-    private ActionTypeRepository actionTypeRepository;
     private ActionTypeDataRepository typeDataRepository;
 
     @Value("${broker}")
     private String broker;
 
     @Autowired
-    public ActionService(
-            ActionRepository actionRepository,
-            ActionTypeDataRepository typeDataRepository,
-            ActionTypeRepository actionTypeRepository
-    ) {
+    public ActionService(ActionRepository actionRepository, ActionTypeDataRepository typeDataRepository) {
         this.actionRepository = actionRepository;
         this.typeDataRepository = typeDataRepository;
-        this.actionTypeRepository = actionTypeRepository;
     }
 
     public List<ActionResponseDto> getAllActions() {
@@ -46,7 +41,7 @@ public class ActionService {
         List<Action> actions = actionRepository.findAll();
         actions.forEach(action -> {
             ActionType actionType = action.getActionType();
-            List<ActionDto> actionDtos = actionType.getActionTypeData()
+            List<ActionDto> actionList = actionType.getActionTypeData()
                     .stream()
                     .map(actionTypeData ->
                             new ActionDto(
@@ -55,7 +50,7 @@ public class ActionService {
                                     "Button"
                             ))
                     .collect(Collectors.toList());
-            responseDto.add(new ActionResponseDto(action.getId(), action.getName(), actionDtos));
+            responseDto.add(new ActionResponseDto(action.getId(), action.getName(), actionList));
         });
 
         return responseDto;
@@ -78,7 +73,7 @@ public class ActionService {
             opt.setAutomaticReconnect(true);
             opt.setKeepAliveInterval(30);
 
-            MqttClient publisher = new MqttClient(broker, UUID.randomUUID().toString());
+            MqttClient publisher = new MqttClient(broker, UUID.randomUUID().toString(), new MemoryPersistence());
             publisher.connect(opt);
             publisher.publish(topic, message.getBytes(), 0, false);
         } catch (MqttException e) {

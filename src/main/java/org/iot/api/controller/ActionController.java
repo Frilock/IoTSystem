@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Slf4j
 @RestController
@@ -24,8 +25,8 @@ public class ActionController {
         return actionService.getAllActions();
     }
 
-    @PostMapping("/{actionId}/{actionTypeDataId}")
+    @PostMapping("/{actionTypeDataId}/{actionId}")
     public void handleAction(@PathVariable long actionId, @PathVariable long actionTypeDataId) {
-        //deviceService.handleAction(actionId, actionTypeDataId);
+        actionService.handleAction(actionId, actionTypeDataId);
     }
 }
