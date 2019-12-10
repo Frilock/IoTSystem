@@ -33,13 +33,13 @@ public class UserService implements UserDetailsService {
         // TODO : think about ...
         roles.add(new SimpleGrantedAuthority(Role.USER.name()));
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+        return new org.springframework.security.core.userdetails.User(user.getLogin(),
                 user.getPassword(),
                 roles);
     }
 
     public boolean addUser(User user) {
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+        if (userRepository.findByEmail(user.getLogin()) != null) {
             return false;
         }
 

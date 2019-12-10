@@ -33,21 +33,23 @@ public class UserController {
     public ResponseEntity<?> authenticateUser(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        user.getEmail(),
+                        user.getLogin(),
                         user.getPassword()
                 )
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = tokenUtil.createToken(user.getEmail());
-        return ResponseEntity.ok(new AuthResponseDto(1337L, user.getEmail(), token));
+        String token = tokenUtil.createToken(user.getLogin());
+        return ResponseEntity.ok(new AuthResponseDto(1337L, user.getLogin(), token));
     }
 
+    //TODO: заменить входной параметр с entity user на dto (userDto)
     @PostMapping("/users/signup")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
+        log.info("User" + user.getPassword());
         if(userService.addUser(user)) {
-            String token = tokenUtil.createToken(user.getEmail());
-            return ResponseEntity.ok(new AuthResponseDto(1337L, user.getEmail(), token));
+            String token = tokenUtil.createToken(user.getLogin());
+            return ResponseEntity.ok(new AuthResponseDto(1337L, user.getLogin(), token));
         } else {
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
