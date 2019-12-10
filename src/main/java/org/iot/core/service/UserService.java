@@ -26,7 +26,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username);
+        User user = userRepository.findByLogin(username);
 
         //TODO: store roles in db
         Set<GrantedAuthority> roles = new HashSet<>();
@@ -39,7 +39,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean addUser(User user) {
-        if (userRepository.findByEmail(user.getLogin()) != null) {
+        if (userRepository.findByLogin(user.getLogin()) != null) {
             return false;
         }
 
