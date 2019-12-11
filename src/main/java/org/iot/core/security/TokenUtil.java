@@ -19,7 +19,7 @@ import java.util.Optional;
 public class TokenUtil {
 
     @Getter
-    private static final String TOKEN_HEADER = "Authorization";
+    private static final String TOKEN_HEADER = "authorization";
     @Getter
     private static final String TOKEN_PREFIX = "Token ";
     @Getter
