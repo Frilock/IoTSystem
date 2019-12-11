@@ -15,13 +15,6 @@ import java.util.logging.Logger;
 public class ActionController {
     private ActionService actionService;
 
-    /*
-     * Гет метод возвращает Dto, с параметрами label (topic, который пришел на вхож)
-     * И Массив из двух полей - первое дата (тс) второе значение (месседж)
-     * Хардкодим так что шлем последние 10 записей по дате.
-     * Роут посмотреть в проекте.
-     */
-
     @Autowired
     public ActionController(ActionService actionService) {
         this.actionService = actionService;
