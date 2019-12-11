@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 @Slf4j
 @RestController
-@RequestMapping("api/actions")
+@RequestMapping("/api/actions")
 public class ActionController {
     private ActionService actionService;
 

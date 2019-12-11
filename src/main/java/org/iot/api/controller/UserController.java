@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
     private UserService userService;
     private TokenUtil tokenUtil;
@@ -29,27 +29,27 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/users/signin")
+    @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        user.getLogin(),
+                        user.getEmail(),
                         user.getPassword()
                 )
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = tokenUtil.createToken(user.getLogin());
-        return ResponseEntity.ok(new AuthResponseDto(1337L, user.getLogin(), token));
+        String token = tokenUtil.createToken(user.getEmail());
+        return ResponseEntity.ok(new AuthResponseDto(1337L, user.getEmail(), token));
     }
 
     //TODO: заменить входной параметр с entity user на dto (userDto)
-    @PostMapping("/users/signup")
+    @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         log.info("User" + user.getPassword());
         if(userService.addUser(user)) {
-            String token = tokenUtil.createToken(user.getLogin());
-            return ResponseEntity.ok(new AuthResponseDto(1337L, user.getLogin(), token));
+            String token = tokenUtil.createToken(user.getEmail());
+            return ResponseEntity.ok(new AuthResponseDto(1337L, user.getEmail(), token));
         } else {
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
