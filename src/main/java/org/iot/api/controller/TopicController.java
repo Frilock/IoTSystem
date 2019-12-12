@@ -3,10 +3,7 @@ package org.iot.api.controller;
 import org.iot.core.dto.TopicDataDto;
 import org.iot.core.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /*
  * Гет метод возвращает Dto, с параметрами label (topic, который пришел на вхож)
@@ -16,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("api/...")
+@RequestMapping("api/topics")
 public class TopicController {
     private TopicService topicService;
 
@@ -25,8 +22,8 @@ public class TopicController {
         this.topicService = topicService;
     }
 
-    @GetMapping("/{topic}")
-    public TopicDataDto getTopicData(@PathVariable String topic){
+    @GetMapping()
+    public TopicDataDto getTopicData(@RequestParam String topic){
         return topicService.getTopicData(topic);
     }
 

@@ -6,9 +6,9 @@ import org.iot.core.entity.device.InternalBrokerHistory;
 import org.iot.core.repository.TopicDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -24,11 +24,16 @@ public class TopicService {
     public TopicDataDto getTopicData(String topic){
         TopicDataDto topicDto = new TopicDataDto();
 
-        Pageable pageable = new PageRequest(0, 10);
+        // TODO: Go to repository
+        Pageable pageable = new PageRequest(0, 10, Sort.by("date").descending());
         Page<InternalBrokerHistory> pageData = topicRepository.getAllByTopic(pageable, topic);
 
 
         return topicDto;
+    }
+
+    private TopicDataDto convert(Page<InternalBrokerHistory> pageData){
+
     }
 
 }
