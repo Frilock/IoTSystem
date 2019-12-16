@@ -11,6 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Slf4j
 @Service
 public class TopicService {
@@ -28,12 +32,11 @@ public class TopicService {
         Pageable pageable = new PageRequest(0, 10, Sort.by("date").descending());
         Page<InternalBrokerHistory> pageData = topicRepository.getAllByTopic(pageable, topic);
 
+        topicDto.setLabel(topic);
+        topicDto.setData(new ArrayList<>());
+        pageData.getContent().forEach(x -> topicDto.getData().add(new TopicDataDto.Pair(x.getDate(), x.getMessage())));
 
         return topicDto;
-    }
-
-    private TopicDataDto convert(Page<InternalBrokerHistory> pageData){
-
     }
 
 }

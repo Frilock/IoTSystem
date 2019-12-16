@@ -22,7 +22,7 @@ public class TopicController {
         this.topicService = topicService;
     }
 
-    @GetMapping()
+    @GetMapping
     public TopicDataDto getTopicData(@RequestParam String topic){
         return topicService.getTopicData(topic);
     }

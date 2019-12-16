@@ -11,8 +11,14 @@ public class TopicDataDto {
     private String label;
     private List<Pair> data;
 
-    private static class Pair {
+    @Data
+    public static class Pair{
         private Date ts;
         private String message;
+
+        public Pair(Date ts, String message){
+            this.ts = ts;
+            this.message = message;
+        }
     }
 }

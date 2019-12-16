@@ -55,6 +55,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Метод автоматического входа после повторного захода
+     * @param authentication
+     * @return
+     */
     @GetMapping("/users/user")
     public String getCurrentUser(Authentication authentication) {
         return authentication.getName();
