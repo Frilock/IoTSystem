@@ -25,7 +25,7 @@ public class TokenUtil {
     @Getter
     private static final long TOKEN_VALIDITY_TIME = Duration.ofHours(24).toMillis();
 
-    @Value("${jwt.secret}")
+    @Value("${JWT_SECRET}")
     private String secretKey;
 
     public String createToken(String email) {

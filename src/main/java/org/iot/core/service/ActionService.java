@@ -27,7 +27,7 @@ public class ActionService {
     private ActionRepository actionRepository;
     private ActionTypeDataRepository typeDataRepository;
 
-    @Value("${broker}")
+    @Value("${BROKER}")
     private String broker;
 
     @Autowired
