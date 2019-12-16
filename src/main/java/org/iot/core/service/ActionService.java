@@ -12,12 +12,13 @@ import org.iot.core.entity.device.ActionType;
 import org.iot.core.entity.device.ActionTypeData;
 import org.iot.core.repository.ActionRepository;
 import org.iot.core.repository.ActionTypeDataRepository;
-import org.iot.core.repository.ActionTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j

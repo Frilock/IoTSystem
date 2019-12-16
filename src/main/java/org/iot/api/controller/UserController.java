@@ -60,8 +60,8 @@ public class UserController {
      * @param authentication
      * @return
      */
-    @GetMapping("/users/user")
-    public String getCurrentUser(Authentication authentication) {
-        return authentication.getName();
+    @GetMapping("/user")
+    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+        return ResponseEntity.ok(new AuthResponseDto(1337L, authentication.getName(), (String) authentication.getCredentials()));
     }
 }

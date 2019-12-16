@@ -23,7 +23,7 @@ public class TokenUtil {
     @Getter
     private static final String TOKEN_PREFIX = "Token ";
     @Getter
-    private static final long TOKEN_VALIDITY_TIME = Duration.ofHours(2).toMillis();
+    private static final long TOKEN_VALIDITY_TIME = Duration.ofHours(24).toMillis();
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -37,7 +37,7 @@ public class TokenUtil {
                 .compact();
     }
 
-    public Optional<Authentication> validateToken(HttpServletRequest request) {
+    Optional<Authentication> validateToken(HttpServletRequest request) {
         String token = request.getHeader(TOKEN_HEADER);
 
         if (StringUtils.hasText(token) && token.startsWith(TOKEN_PREFIX)) {
@@ -49,7 +49,11 @@ public class TokenUtil {
 
                 String username = claims.getSubject();
                 if (StringUtils.hasText(username)) {
-                    return Optional.of(new UsernamePasswordAuthenticationToken(username, null, null));
+                    return Optional.of(new UsernamePasswordAuthenticationToken(
+                            username,
+                            token.replace(TOKEN_PREFIX, "").trim(),
+                            null
+                    ));
                 }
             } catch (SignatureException ex) {
                 log.error("Invalid JWT signature");
