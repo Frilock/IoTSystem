@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SocketIOServerConfig {
 
-    @Value("${ws-server.host}")
+    @Value("${WS_SERVER_HOST}")
     private String host;
 
-    @Value("${ws-server.port}")
+    @Value("${WS_SERVER_PORT}")
     private Integer port;
 
     @Bean
