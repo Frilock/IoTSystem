@@ -77,6 +77,7 @@ public class ActionService {
             MqttClient publisher = new MqttClient(broker, UUID.randomUUID().toString(), new MemoryPersistence());
             publisher.connect(opt);
             publisher.publish(topic, message.getBytes(), 0, false);
+            publisher.disconnect();
         } catch (MqttException e) {
             log.error("MQTT exception: " + e.getMessage());
         }
