@@ -13,7 +13,7 @@ public class ActionTypeData {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_action_type", nullable = false)
+    @JoinColumn(columnDefinition = "id_action_type", nullable = false)
     private ActionType actionType;
     private String name;
     private String value;

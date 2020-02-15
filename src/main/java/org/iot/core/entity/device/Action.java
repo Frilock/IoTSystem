@@ -15,6 +15,6 @@ public class Action {
     private String mqttTopic;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_action_type", nullable = false)
+    @JoinColumn(columnDefinition = "id_action_type", nullable = false)
     private ActionType actionType;
 }

@@ -3,6 +3,7 @@ package org.iot.core.entity.path;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,4 +16,6 @@ public class People {
     private UUID id;
     private String color;
     private boolean active;
+    @OneToMany(mappedBy = "people", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Path> peoplePaths;
 }

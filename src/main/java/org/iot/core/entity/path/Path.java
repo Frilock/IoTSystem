@@ -21,7 +21,7 @@ public class Path {
     @Column(columnDefinition = "created_at")
     private Date createdDate;
 
-    //TODO: сделать связь с другой таблицей
-
-    private UUID peopleId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(columnDefinition = "person_id", nullable = false)
+    private People people;
 }
