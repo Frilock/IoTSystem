@@ -12,16 +12,16 @@ import java.util.UUID;
 public class Path {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "path_id", nullable = false)
+    @Column(name = "path_id", nullable = false, columnDefinition = "UUID")
     private UUID id;
-    @Column(columnDefinition = "point_x", nullable = false)
+    @Column(name = "point_x", nullable = false)
     private int pointX;
-    @Column(columnDefinition = "point_y", nullable = false)
+    @Column(name = "point_y", nullable = false)
     private int pointY;
-    @Column(columnDefinition = "created_at")
+    @Column(name = "created_at")
     private Date createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(columnDefinition = "person_id", nullable = false)
+    @JoinColumn(name = "person_id", nullable = false)
     private People people;
 }
