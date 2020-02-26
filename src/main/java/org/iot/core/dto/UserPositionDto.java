@@ -2,10 +2,19 @@ package org.iot.core.dto;
 
 import lombok.Data;
 
+import java.util.Date;
+import java.util.UUID;
+
 @Data
 public class UserPositionDto {
-    long userId;
-    // в дальнейшем возможен перевод координат в тип float
-    int positionX;
-    int positionY;
+    private UUID id;
+    private PathDto path;
+
+    @Data
+    private static class PathDto {
+        private UUID pathId;
+        private Date createdDate;
+        private int pointX;
+        private int pointY;
+    }
 }
