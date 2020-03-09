@@ -12,8 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -21,11 +19,11 @@ public class TopicService {
     private TopicDataRepository topicRepository;
 
     @Autowired
-    public TopicService(TopicDataRepository dataRepository){
+    public TopicService(TopicDataRepository dataRepository) {
         this.topicRepository = dataRepository;
     }
 
-    public TopicDataDto getTopicData(String topic){
+    public TopicDataDto getTopicData(String topic) {
         TopicDataDto topicDto = new TopicDataDto();
 
         // TODO: Go to repository
@@ -38,5 +36,4 @@ public class TopicService {
 
         return topicDto;
     }
-
 }

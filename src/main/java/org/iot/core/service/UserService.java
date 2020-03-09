@@ -42,10 +42,8 @@ public class UserService implements UserDetailsService {
         if (userRepository.findByEmail(user.getEmail()) != null) {
             return false;
         }
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-
         return true;
     }
 }

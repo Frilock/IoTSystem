@@ -9,7 +9,7 @@ import java.util.UUID;
 public class UserPositionDto {
     private UUID id;
     private PathDto path;
-
+    // TODO: Адекватный json для сокета
     @Data
     private static class PathDto {
         private UUID pathId;
