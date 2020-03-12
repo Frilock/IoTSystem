@@ -57,8 +57,6 @@ public class UserController {
 
     /**
      * Метод автоматического входа после повторного захода
-     * @param authentication
-     * @return
      */
     @GetMapping("/user")
     public ResponseEntity<?> getCurrentUser(Authentication authentication) {

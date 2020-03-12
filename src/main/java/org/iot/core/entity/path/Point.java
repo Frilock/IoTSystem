@@ -15,9 +15,9 @@ public class Point {
     @Column(name = "point_id", columnDefinition = "UUID")
     private UUID id;
     @Column(name = "position_x", nullable = false)
-    private double positionX;
+    private int positionX;
     @Column(name = "position_y", nullable = false)
-    private double positionY;
+    private int positionY;
     @Column(name = "created_at", nullable = false)
     private Date createdDate;
 }

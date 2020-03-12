@@ -7,14 +7,8 @@ import java.util.UUID;
 
 @Data
 public class UserPositionDto {
-    private UUID id;
-    private PathDto path;
-    // TODO: Адекватный json для сокета
-    @Data
-    private static class PathDto {
-        private UUID pathId;
-        private Date createdDate;
-        private int pointX;
-        private int pointY;
-    }
+    private UUID point_id;
+    private int position_x;
+    private int position_y;
+    private Date created_at;
 }

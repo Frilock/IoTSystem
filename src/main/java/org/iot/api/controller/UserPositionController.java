@@ -1,5 +1,7 @@
 package org.iot.api.controller;
 
+import com.corundumstudio.socketio.AckRequest;
+import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.DataListener;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +9,8 @@ import org.iot.core.dto.UserPositionDto;
 import org.iot.core.service.UserPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Slf4j
@@ -22,20 +26,11 @@ public class UserPositionController {
     }
 
     private DataListener<UserPositionDto> onNewMessage() {
-        UserPositionDto positionDto = positionService.getPoints();
-        log.info("Hello World");
-        return (client, data, ackSender) -> {
-            log.info("Client[{}] - Received new message '{}'", client.getSessionId().toString(), data);
+        List<UserPositionDto> positionDto = positionService.getPoints();
+        log.info("Сформированы данные для отправки по WebSocket");
+
+        return (SocketIOClient client, UserPositionDto data, AckRequest ackSender) -> {
             server.getBroadcastOperations().sendEvent("receive message", data);
         };
     }
-
-    /*
-    @Scheduled(fixedRate = 20000)
-    private void sendMessage() {
-        log.info("Sending message");
-        UserPositionDto message = new UserPositionDto();
-        server.getBroadcastOperations().sendEvent("receive message", message);
-    }
-     */
 }

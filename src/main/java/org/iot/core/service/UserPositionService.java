@@ -7,12 +7,13 @@ import org.iot.core.repository.PointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Service
 public class UserPositionService {
-    private static final double SCALE = 10.0;
+    private static final int SCALE = 100;
     private PointRepository pointRepository;
 
     @Autowired
@@ -20,9 +21,16 @@ public class UserPositionService {
         this.pointRepository = pointRepository;
     }
 
-
-    public UserPositionDto getPoints() {
+    public List<UserPositionDto> getPoints() {
         List<Point> points = pointRepository.findAll();
-        return null;
+        List<UserPositionDto> dtoPoints = new ArrayList<>();
+        for (Point point : points) {
+            UserPositionDto userPositionDto = new UserPositionDto();
+            userPositionDto.setCreated_at(point.getCreatedDate());
+            userPositionDto.setPoint_id(point.getId());
+            userPositionDto.setPosition_x(point.getPositionX() * SCALE);
+            userPositionDto.setPosition_y((point.getPositionY() + 2) * SCALE);
+        }
+        return dtoPoints;
     }
 }
